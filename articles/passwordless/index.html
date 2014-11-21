@@ -40,7 +40,7 @@
 <h1 id="getting-started-on-node-js-express">Getting started on Node.js <span class="amp">&amp;</span>&nbsp;Express</h1>
 <p>Getting started with Passwordless is straight-forward and you’ll be able to deploy a fully fledged and secure authentication solution for a small project within two&nbsp;hours:</p>
 <p><code>$ npm install passwordless --save</code></p>
-<p>gets you the basic framework. You’ll also want to install one of the existing <a href="https://passwordless.net/plugins">storage interfaces</a> such as <a href="https://github.com/florianheinemann/passwordless-mongostore">MongoStore</a> which store the tokens&nbsp;securely:</p>
+<p>gets you the basic framework. You&#39;ll also want to install one of the existing <a href="https://passwordless.net/plugins">storage interfaces</a> such as <a href="https://github.com/florianheinemann/passwordless-mongostore">MongoStore</a> which store the tokens&nbsp;securely:</p>
 <p><code>$ npm install passwordless-mongostore --save</code></p>
 <p>To deliver the tokens to the users, email would be the most common option (but text message is also feasible) and you’re free to pick any of the existing email frameworks such&nbsp;as:</p>
 <p><code>$ npm install emailjs --save</code></p>
@@ -92,10 +92,10 @@ app.use(passwordless.acceptToken({ successRedirect: <span class="string">'/'</sp
 <p><code>sessionSupport()</code> makes the login persistent, so the user will stay logged in while browsing your site. Please make sure that you’ve already prepared your session middleware (such as <a href="https://github.com/expressjs/session">express-session</a>)&nbsp;beforehand.</p>
 <p><code>acceptToken()</code> will intercept any incoming tokens, authenticate users, and redirect them to the correct page. While the option <code>successRedirect</code> is not strictly needed, it is strongly recommended to use it to avoid leaking valid tokens via the referrer header of outgoing <span class="caps">HTTP</span> links on your&nbsp;site.</p>
 <h1 id="routing-authenticating">Routing <span class="amp">&amp;</span>&nbsp;Authenticating</h1>
-<p>The following takes for granted that you’ve already setup your router <code>var router = express.Router();</code> as explained in the <a href="http://expressjs.com/4x/api.html#router">express&nbsp;docs</a></p>
+<p>The following takes for granted that you&#39;ve already setup your router <code>var router = express.Router();</code> as explained in the <a href="http://expressjs.com/4x/api.html#router">express&nbsp;docs</a></p>
 <p>You will need at least two URLs&nbsp;to:</p>
 <ul>
-<li>Display a page asking for the user’s&nbsp;email</li>
+<li>Display a page asking for the user&#39;s&nbsp;email</li>
 <li>Accept the form details (via&nbsp;<span class="caps">POST</span>)</li>
 </ul>
 <pre><code class="lang-javascript"><span class="comment">/* <span class="caps">GET</span>: login screen */</span>
@@ -216,7 +216,7 @@ router.use(<span class="string">'/admin'</span>, passwordless.restricted());
     <footer>
       <div class="content-wrap">
         <div class="nav"><a href="/">« Full blog</a></div>
-        <section class="about"><p>This is the personal blog of <a href="https://twitter.com/thesumofall">Florian Heinemann</a> who is a System Design and Management Fellow at MIT. I blog about innovation, privacy, networks, complexity, and organization theory. If you’d like to get in touch with me you can reach me via <a href="http://www.linkedin.com/in/florianheinemann/">LinkedIn</a>, <a href="https://twitter.com/thesumofall">Twitter</a>, and <a href="mailto:florian.heinemann@gmail.com">email</a>.</p>
+        <section class="about"><p>This is the personal blog of <a href="https://twitter.com/thesumofall">Florian Heinemann</a> who is a System Design and Management Fellow at MIT. I blog about innovation, privacy, networks, complexity, and organization theory. If you&#39;d like to get in touch with me you can reach me via <a href="http://www.linkedin.com/in/florianheinemann/">LinkedIn</a>, <a href="https://twitter.com/thesumofall">Twitter</a>, and <a href="mailto:florian.heinemann@gmail.com">email</a>.</p>
 
         </section>
         <section class="copy">
