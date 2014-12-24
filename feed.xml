@@ -6,8 +6,8 @@
 </description>
     <link>http://www.florianheinemann.com/</link>
     <atom:link href="http://www.florianheinemann.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 24 Dec 2014 15:34:54 +0100</pubDate>
-    <lastBuildDate>Wed, 24 Dec 2014 15:34:54 +0100</lastBuildDate>
+    <pubDate>Wed, 24 Dec 2014 15:41:53 +0100</pubDate>
+    <lastBuildDate>Wed, 24 Dec 2014 15:41:53 +0100</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
     
       <item>
@@ -100,7 +100,7 @@
 
 &lt;p&gt;This buildpack has been successfully run on Digital Ocean instances of Ubuntu 14.04 and I assume that other configurations might work as well. Let me know if you successfully used the buildpack in different configurations.&lt;/p&gt;
 </description>
-        <pubDate>Tue, 18 Nov 2014 02:28:31 +0100</pubDate>
+        <pubDate>Tue, 18 Nov 2014 12:28:31 +0100</pubDate>
         <link>http://www.florianheinemann.com/github/dokku/2014/11/18/Hosting-static-pages-on-Dokku.html</link>
         <guid isPermaLink="true">http://www.florianheinemann.com/github/dokku/2014/11/18/Hosting-static-pages-on-Dokku.html</guid>
         
