@@ -2,13 +2,664 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Florian Heinemann</title>
-    <description>This is the personal blog of Florian Heinemann who  is a System Design and Management Fellow at MIT. He  blogs about innovation, privacy, networks, complexity,  and organization theory.
+    <description>This is the personal blog of Florian Heinemann who is a System Design and Management Fellow at MIT. He blogs about innovation, privacy, networks, complexity, and organization theory.
 </description>
-    <link>http://www.florianheinemann.com/</link>
-    <atom:link href="http://www.florianheinemann.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 01 Jan 2015 10:20:41 +0100</pubDate>
-    <lastBuildDate>Thu, 01 Jan 2015 10:20:41 +0100</lastBuildDate>
-    <generator>Jekyll v2.5.2</generator>
+    <link>https://www.florianheinemann.com/</link>
+    <atom:link href="https://www.florianheinemann.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 09 Jan 2019 10:21:05 +0100</pubDate>
+    <lastBuildDate>Wed, 09 Jan 2019 10:21:05 +0100</lastBuildDate>
+    <generator>Jekyll v3.3.0</generator>
+    
+      <item>
+        <title>The relevance of DriveNow's electric cars for Hamburg's charging infrastructure</title>
+        <description>&lt;p&gt;Casual observers of the public charging infrastructure in Hamburg will note that many of the spots are taken by car sharing companies – specifically by &lt;a href=&quot;https://www.drive-now.com/de/de/cars/bmw-i3&quot;&gt;DriveNow and their i3s&lt;/a&gt;. But &lt;strong&gt;for how many charging transactions do they really account?&lt;/strong&gt; In short: &lt;strong&gt;It’s about a third&lt;/strong&gt;. This is based on 56 personal observations across the inner city of Hamburg.&lt;/p&gt;
+
+&lt;div class=&quot;chart-container&quot; style=&quot;position: relative; min-height:400px&quot;&gt;
+&lt;canvas id=&quot;chargingChart1&quot;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+  };
+  var ctx = document.getElementById(&quot;chargingChart1&quot;).getContext('2d');
+  Chart.defaults.global.defaultFontSize = 16;
+  Chart.defaults.global.defaultFontColor = '#111';
+  Chart.defaults.global.maintainAspectRatio = false;
+  var chargingChart1 = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: ['Local (HH)', 'DriveNow', 'Non-local', 'Other private*'],
+          datasets: [{
+            label: 'Share of observed charging transactions',
+            borderColor: window.chartColors.blue,
+            backgroundColor: window.chartColors.blue,
+            fill: false,
+            data: [
+              25/0.56, 16/0.56, 11/0.56, 4/0.56
+            ],
+            yAxisID: 'y-axis-1',
+          }]
+
+      },
+      options: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        return Math.round(tooltipItem.yLabel*10)/10+'%';
+                    }
+                }
+            },
+          responsive: true,
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+            display: true,
+            text: 'DriveNow accounts for ~30% of all public charging (n=56)'
+          },
+          scales: {
+          		xAxes: [ {
+              	scaleLabel: {
+                	display: true,
+                  labelString: 'License plates'
+                }
+              }],
+              yAxes: [{
+                type: 'linear', 
+                display: true,
+                position: 'left',
+                ticks: {
+                  min: 0,
+                  max: 50,
+                  callback: function(value) {
+                  	return value + &quot;%&quot;
+                  }
+                },
+                id: 'y-axis-1'
+              }],
+            }
+      }
+  });
+&lt;/script&gt;
+
+&lt;p&gt;&lt;em&gt;Source: Personal data collection in early March 2018. Focus on inner city ranging from Eimsbüttel in the West, Winterhude in the North, Wandsbek in the East, and HafenCity in the South. (*): Includes leasing cars such as the ones of Yellow Strom&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;But how does that compare to the number of electric cars on the road? Turns out &lt;strong&gt;DriveNow’s i3s indeed have an outsized share of charging transactions&lt;/strong&gt; compared to all other electric cars on the road. Based on some extrapolation from data of the city of Hamburg there are ~2,800 EVs&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; and PHEVs registered in Hamburg (this excludes electric cars that are not allowed on public roads). In comparison, there are only 200 electric DriveNows in Hamburg (as of Dec 2017).&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; Let’s assume that the number of non-local cars charging in Hamburg is roughly balanced by those that are registered in Hamburg but charge elsewhere. From that perspective &lt;strong&gt;car sharing vehicles use about 4.3x as many charging transactions as you’d expect.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;chart-container&quot; style=&quot;position: relative; min-height:400px&quot;&gt;
+&lt;canvas id=&quot;chargingChart2&quot;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+  };
+  var ctx = document.getElementById(&quot;chargingChart2&quot;).getContext('2d');
+  Chart.defaults.global.defaultFontSize = 16;
+  Chart.defaults.global.defaultFontColor = '#111';
+  Chart.defaults.global.maintainAspectRatio = false;
+  var chargingChart2 = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: [&quot;Regular EVs/PHEVs&quot;,	&quot;DriveNow's i3s&quot;],
+
+          datasets: [{
+            label: 'Share of charging transactions',
+            borderColor: window.chartColors.blue,
+            backgroundColor: window.chartColors.blue,
+            fill: false,
+            data: [
+              (56-16)/56*100, 16/56*100
+            ]
+          }, {
+            label: 'Share of cars',
+            borderColor: window.chartColors.red,
+            backgroundColor: window.chartColors.red,
+            fill: false,
+            data: [
+              2833/(2833+200)*100,	200/(2833+200)*100
+            ]
+          }]
+
+      },
+      options: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        return Math.round(tooltipItem.yLabel*10)/10+'%';
+                    }
+                }
+            },
+          responsive: true,
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+            display: true,
+            text: 'DriveNow has an outsized share of charging transactions'
+          },
+          scales: {
+              yAxes: [{
+                type: 'linear', 
+                display: true,
+                position: 'left',
+                ticks: {
+                  min: 0,
+                  max: 100,
+                  callback: function(value) {
+                  	return value + &quot;%&quot;
+                  }
+                },
+                id: 'y-axis-1'
+              }],
+            }
+
+      }
+  });
+&lt;/script&gt;
+
+&lt;p&gt;&lt;em&gt;Source: Personal data collection and data of the city of Hamburg&lt;sup id=&quot;fnref:1:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Surely, you’ll say that car sharing vehicles have – on average – higher mileage. And you’d be correct. The average car in Germany is driven ~14,000km each year.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; Statistics for car sharing vehicles are more difficult to come by. However, DriveNow claims their cars are utilized for 3-5h per day.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; Combine this with data from Berlin from 2015 that claims that the average trip takes 18min for 8km&lt;sup id=&quot;fnref:5&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt; and you end up with 80-133km per day or 29,000-48,000km per year. On average, that’s about  &lt;strong&gt;~2.75x as many kilometers as private vehicles.&lt;/strong&gt; Assuming that EVs/PHEVs drive as much as regular cars (maybe a bit optimistic?), we can now (hopefully) compare apples to apples:&lt;/p&gt;
+
+&lt;div class=&quot;chart-container&quot; style=&quot;position: relative; min-height:400px&quot;&gt;
+&lt;canvas id=&quot;chargingChart3&quot;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+  };
+  var ctx = document.getElementById(&quot;chargingChart3&quot;).getContext('2d');
+  Chart.defaults.global.defaultFontSize = 16;
+  Chart.defaults.global.defaultFontColor = '#111';
+  Chart.defaults.global.maintainAspectRatio = false;
+  var chargingChart3 = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: [&quot;Regular EVs/PHEVs&quot;,	&quot;DriveNow's i3s&quot;],
+
+          datasets: [{
+            label: 'Share of charging transactions',
+            borderColor: window.chartColors.blue,
+            backgroundColor: window.chartColors.blue,
+            fill: false,
+            data: [
+              (56-16)/56*100, 16/56*100
+            ]
+          }, {
+            label: 'Share of driven kilometers',
+            borderColor: window.chartColors.red,
+            backgroundColor: window.chartColors.red,
+            fill: false,
+            data: [
+              (2833*14000)/((2833*14000)+(200*((29000+48000)/2)))*100,
+              (200*((29000+48000)/2))/((2833*14000)+(200*((29000+48000)/2)))*100
+            ]
+          }]
+
+      },
+      options: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        return Math.round(tooltipItem.yLabel*10)/10+'%';
+                    }
+                }
+            },
+          responsive: true,
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+            display: true,
+            text: 'Adjusted for km DriveNow still has an outsized share of transactions'
+          },
+          scales: {
+              yAxes: [{
+                type: 'linear', 
+                display: true,
+                position: 'left',
+                ticks: {
+                  min: 0,
+                  max: 90,
+                  callback: function(value) {
+                  	return value + &quot;%&quot;
+                  }
+                },
+                id: 'y-axis-1'
+              }],
+            }
+
+      }
+  });
+&lt;/script&gt;
+
+&lt;p&gt;&lt;em&gt;Source: Personal data collection and data of the city of Hamburg&lt;sup id=&quot;fnref:1:2&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;While already closer, there is still quite a gap between observation and expectations: Adjusted for kilometers, &lt;strong&gt;DriveNow vehicles still have 1.8x as many transactions at public charging stations than you’d expect&lt;/strong&gt;. So, what’s left? Home charging, of course. DriveNow mostly relies on public charging stations with few exceptions where they recharge cars with mobile batteries in case of a deep discharge of a car. Regular owners, on the other hand, mostly charge at home. According to an US survey from 4 years ago &lt;strong&gt;81% of all charging is done at home.&lt;/strong&gt;&lt;sup id=&quot;fnref:6&quot;&gt;&lt;a href=&quot;#fn:6&quot; class=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt; Only 10% of all charging is done at public charging stations with the remains taking place mostly at the workplace. I strongly suspect that the share of home charging is lower in Germany, but I couldn’t find any data on this. Assuming that BMW’s i3 has a roughly equivalent range to the average EV/PHEV on the road, we can try to approximate how home charging would influence the expected shares of public charging. Multiplying number of cars with average kilometers and share of public charging, we learn that &lt;strong&gt;DriveNow’s expected share would be 66% of all transactions at public charging stations&lt;/strong&gt;. Interestingly, that’s almost twice what we observed. It seems regular EV owners are using public charging to a much larger extent that you’d expect. I can see the following factors being at play here:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Surely, there are gaps in the data. My calculations are only based on 56 observations. Plus, we know little about the share of home charging in Germany. In many areas of Hamburg it is rare that people own a dedicated parking space&lt;/li&gt;
+  &lt;li&gt;Hamburg offers free parking while charging publicly. That’s huge – especially in the crowded inner city. DriveNow cars, on the other hand, can park anywhere for free&lt;/li&gt;
+  &lt;li&gt;DriveNow incentivizes people to park their cars at charging stations (30 free minutes). However, it takes quite a bit of time to find those stations and it’s not that easy to actually charge the car if you don’t do that regularly. So, how many people do really charge their car sharing vehicles?&lt;/li&gt;
+  &lt;li&gt;Public charging stations in Hamburg are cheap in comparison to many private offerings. Again, I believe if you were to ask Germans where they charge their cars, you would see a different share than in the US&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;chart-container&quot; style=&quot;position: relative; min-height:400px&quot;&gt;
+&lt;canvas id=&quot;chargingChart4&quot;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+  };
+  var ctx = document.getElementById(&quot;chargingChart4&quot;).getContext('2d');
+  Chart.defaults.global.defaultFontSize = 16;
+  Chart.defaults.global.defaultFontColor = '#111';
+  Chart.defaults.global.maintainAspectRatio = false;
+  var chargingChart4 = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: [&quot;Regular EVs/PHEVs&quot;,	&quot;DriveNow's i3s&quot;],
+
+          datasets: [{
+            label: 'Observed share of charging transactions',
+            borderColor: window.chartColors.blue,
+            backgroundColor: window.chartColors.blue,
+            fill: false,
+            data: [
+              (56-16)/56*100, 16/56*100
+            ]
+          }, {
+            label: 'Expected share',
+            borderColor: window.chartColors.red,
+            backgroundColor: window.chartColors.red,
+            fill: false,
+            data: [
+              34,
+              66
+            ]
+          }]
+
+      },
+      options: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        return Math.round(tooltipItem.yLabel*10)/10+'%';
+                    }
+                }
+            },
+          responsive: true,
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+            display: true,
+            text: 'Accounting for home-charging the picture flips'
+          },
+          scales: {
+              yAxes: [{
+                type: 'linear', 
+                display: true,
+                position: 'left',
+                ticks: {
+                  min: 0,
+                  max: 80,
+                  callback: function(value) {
+                  	return value + &quot;%&quot;
+                  }
+                },
+                id: 'y-axis-1'
+              }],
+            }
+
+      }
+  });
+&lt;/script&gt;
+
+&lt;p&gt;&lt;em&gt;Source: Personal data collection and data of the city of Hamburg&lt;sup id=&quot;fnref:1:3&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;any-implications-for-the-future&quot;&gt;Any implications for the future?&lt;/h3&gt;
+&lt;p&gt;Yes! Thanks to an agreement between the city of Hamburg and the two big car sharing providers (DriveNow and car2go), it is planned that &lt;strong&gt;the number of electric car sharing vehicles will grow to 950 by the end of 2019&lt;/strong&gt;. This is on top to any deployments by smaller providers. If we assume that growth of the regular EV/PHEV fleet will continue at the current pace of 38% p.a., we’ll see about 3,600 regular electric cars on the roads by Dec 2019. If that were the case, &lt;strong&gt;charging stations could be used to ~60% by DriveNow and the likes&lt;/strong&gt; based on my actual observations. The share could be as high as 88% if you project based on home-charging ratios, etc.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-did-we-learn&quot;&gt;What did we learn?&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Car sharing providers are already an important customer of the public charging infrastructure&lt;/strong&gt; and will become even more important in the future&lt;/li&gt;
+  &lt;li&gt;However, on average, &lt;strong&gt;current utilization of the public infrastructure is &lt;a href=&quot;/emobility/2018/03/10/more-charging-points-in-hamburg-but-still-limited-uptake.html&quot;&gt;still very low&lt;/a&gt;&lt;/strong&gt; as I’ve shown in a separate post&lt;/li&gt;
+  &lt;li&gt;Hence, car sharing will be an important factor to &lt;strong&gt;make charging stations more profitable&lt;/strong&gt; in the future&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;In some inner-city areas we may witness some shortage of chargers&lt;/strong&gt; which can be compensated by more chargers (already in the works) or higher prices (e.g., removing the free parking inventive)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The raw data of my personal collection can be found &lt;a href=&quot;/assets/2018-03-14-Users-of-Hamburgs-charging-infrastructure.csv&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://www.buergerschaft-hh.de/ParlDok/dokument/59190/haushaltsplan-2017-2018-einzelplan-7-0-%E2%80%9Ebeh%C3%B6rde-f%C3%BCr-wirtschaft-verkehr-und-innovation%E2%80%9C-hier-nachbewilligung-nach-%C2%A7-35-lho-und-stellungnahme.pdf&quot;&gt;Drucksache 21/10349&lt;/a&gt;, Buergerschaft der Freien und Hansestadt Hamburg, 12. Sep 2017 &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt; &lt;a href=&quot;#fnref:1:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; &lt;a href=&quot;#fnref:1:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; &lt;a href=&quot;#fnref:1:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://www.automobilwoche.de/article/20171205/AGENTURMELDUNGEN/312059989/carsharing-anbieter-erweitert-flotte-auf--bmw-i-drivenow-setzt-in-hamburg-verstaerkt-auf-elektroautos&quot;&gt;Automobilwoche, data from 2017&lt;/a&gt; &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://www.kba.de/DE/Statistik/Kraftverkehr/VerkehrKilometer/verkehr_in_kilometern_node.html&quot;&gt;KBA, data from 2016&lt;/a&gt; &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;http://www.sueddeutsche.de/news/wirtschaft/auto---berlin-drivenow-mehr-kunden-mehr-autos-hoehere-auslastung-dpa.urn-newsml-dpa-com-20090101-180110-99-578734&quot;&gt;Süddeutsche Zeitung, data from 2017&lt;/a&gt; &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:5&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://www.tagesspiegel.de/berlin/neue-studie-zu-berlin-und-muenchen-carsharing-entlastet-den-verkehr-kaum/12461384.html&quot;&gt;Tagesspiegel, data from 2015&lt;/a&gt; &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:6&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://insideevs.com/most-electric-vehicle-owners-charge-at-home-in-other-news-the-sky-is-blue/&quot;&gt;InsideEVs, data from 2014&lt;/a&gt; &lt;a href=&quot;#fnref:6&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 14 Mar 2018 12:05:31 +0100</pubDate>
+        <link>https://www.florianheinemann.com/emobility/2018/03/14/How-car-sharing-is-impacting-charging-stations.html</link>
+        <guid isPermaLink="true">https://www.florianheinemann.com/emobility/2018/03/14/How-car-sharing-is-impacting-charging-stations.html</guid>
+        
+        
+        <category>eMobility</category>
+        
+      </item>
+    
+      <item>
+        <title>Hamburg investiert in mehr Ladepunkte. Die Nutzung bleibt aber weiterhin auf niedrigem Niveau</title>
+        <description>&lt;p&gt;Hamburg hat sich in den letzten Jahren als Vorreiter in Sachen Elektromobilität in Deutschland positioniert. Dies ist unter Anderem dem &lt;em&gt;Masterplan Ladeinfrastruktur&lt;/em&gt; zu verdanken der zur Installation von mehr als 600 öffentlichen Ladepunkten an 300 Standorten bis Ende 2017 geführt hat. Weitere 400 Ladepunkte sind bereits bis 2019 eingeplant. Damit soll auch das Henne-Ei Problem gelöst werden, dass potentielle Käufer von Elektroautos weiterhin vom Kauf zurückschrecken wegen mangelnder Infrastruktur.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Dank einer &lt;a href=&quot;https://www.now-gmbh.de/content/1-aktuelles/1-presse/20180226-fachkonf-bundesfoerderung-bringt-elektromobilitaet-entscheidend-voran/tag-2_2-2-2_zisler-hamburg.pdf&quot;&gt;öffentlichen Präsentation&lt;/a&gt; von Stromnetz Hamburg, der Betreiber der öffentlichen Ladeinfrastruktur, haben wir jetzt auch ein deutlich besseres Bild davon wie intensiv die Ladepunkte denn wirklich genutzt werden (siehe unten). Wie auf der Grafik sichtbar hat sich die Anzahl der öffentlichen Ladepunkte in der Tat drastisch erhöht. Allein zwischen Mitte 2016 und Mitte 2017 ist die Anzahl um mehr als 50% gewachsen und damit sogar schneller als die Anzahl an Elektroautos in Hamburg (36%).&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Nicht überraschend bei diesen Zahlen ist die Anzahl der Ladevorgänge pro Station relativ flach geblieben, wenn man von den Saisoneffekten absieht (höhere Nutzung der Car Sharing Fahrzeuge im Winter, höherer Batterieverbrauch im Winter, etc.) Auch die durchschnittliche Lademenge ist mit 9-12 kWh recht konstant geblieben.&lt;/p&gt;
+
+&lt;p&gt;Überraschend ist wie gering die absoluten Zahlen sind. Mit rund einem Ladevorgang pro Tag bleiben die meisten Standorte weiterhin unterausgelastet. Es muss allerdings erwähnt werden, dass das Nutzungsverhalten über die Stationen hinweg sehr unterschiedlich zu sein scheint. Manche Stationen werden wohl bis zu 8 mal am Tag genutzt.&lt;sup id=&quot;fnref:2:1&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Auch wenn man sich eine breitere Nutzung der Stationen wünschen würde, ist es doch erfreuend zu sehen, dass die Stadt Hamburg bereit ist langfristig zu investieren. Dass die Stadt sich auch auf weniger genutzte Standorte außerhalb des Zentrums konzentriert, wird sicherlich über die nächsten Jahre die Akzeptanz der Elektromobilität weiter erhöhen.&lt;/p&gt;
+
+&lt;div class=&quot;chart-container&quot; style=&quot;position: relative; min-height:400px&quot;&gt;
+&lt;canvas id=&quot;chargingChart1&quot;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+  };
+  var ctx = document.getElementById(&quot;chargingChart1&quot;).getContext('2d');
+  Chart.defaults.global.defaultFontSize = 16;
+  Chart.defaults.global.defaultFontColor = '#111';
+  Chart.defaults.global.maintainAspectRatio = false;
+  var chargingChart1 = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: [&quot;Jul 16&quot;,	&quot;Aug 16&quot;,	&quot;Sep 16&quot;,	&quot;Oct 16&quot;,	&quot;Nov 16&quot;,	&quot;Dec 16&quot;,	&quot;Jan 17&quot;,	&quot;Feb 17&quot;,	&quot;Mar 17&quot;,	&quot;Apr 17&quot;,	&quot;May 17&quot;,	&quot;Jun 17&quot;,	&quot;Jul 17&quot;,	&quot;Aug 17&quot;,	&quot;Sep 17&quot;,	&quot;Oct 17&quot;,	&quot;Nov 17&quot;,	&quot;Dec 17&quot;,	&quot;Jan 18&quot;],
+
+          datasets: [{
+            label: 'Ladestandorte (Stromnetz Hamburg)',
+            borderColor: window.chartColors.blue,
+            backgroundColor: window.chartColors.blue,
+            fill: false,
+            data: [
+              108,	114,	123,	132,	134,	138,	146,	148,	160,	180,	197,	206,	220,	249,	274,	297,	309,	311,	324
+            ],
+            yAxisID: 'y-axis-1',
+          }, {
+            label: 'Ladevorgänge / Standort / Tag',
+            borderColor: window.chartColors.red,
+            backgroundColor: window.chartColors.red,
+            fill: false,
+            data: [
+              0.9,	0.78,	0.83,	0.8,	0.93,	0.98,	0.97,	0.95,	0.91,	0.82,	0.79,	0.73,	0.67,	0.68,	0.7,	0.74,	0.87,	0.96,	1.06
+            ],
+            yAxisID: 'y-axis-2'
+          }]
+
+      },
+      options: {
+          responsive: true,
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+            display: true,
+            text: 'Ladevorgänge an den öffentlichen Ladesäulen in Hamburg'
+          },
+          scales: {
+              yAxes: [{
+                type: 'linear', 
+                display: true,
+                position: 'left',
+                ticks: {
+                  beginAtZero: true
+                },
+              	scaleLabel: {
+                	display: true,
+                  labelString: 'Standorte'
+                },
+                id: 'y-axis-1'
+              }, {
+                type: 'linear', 
+                beginAtZero: true,
+                display: true,
+                position: 'right',
+                ticks: {
+                  beginAtZero: true
+                },
+              	scaleLabel: {
+                	display: true,
+                  labelString: 'Ladevorgänge / Standort / Tag'
+                },
+                id: 'y-axis-2',
+
+                gridLines: {
+                  drawOnChartArea: false
+                },
+              }],
+            }
+
+      }
+  });
+&lt;/script&gt;
+
+&lt;p&gt;&lt;em&gt;Quelle: Stromnetz Hamburg&lt;sup id=&quot;fnref:1:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;Ladeinfrastruktur und Netzintegration, 5. Fachkonferenz Elektromobilität vor Ort, 27. Feb 2018 Leipzig &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt; &lt;a href=&quot;#fnref:1:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;Drucksache 21/10349, Buergerschaft der Freien und Hansestadt Hamburg, 12. Sep 2017 &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt; &lt;a href=&quot;#fnref:2:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sat, 10 Mar 2018 12:05:32 +0100</pubDate>
+        <link>https://www.florianheinemann.com/emobility/2018/03/10/mehr-ladestationen-in-hamburg-aber-begrenzte-nutzung.html</link>
+        <guid isPermaLink="true">https://www.florianheinemann.com/emobility/2018/03/10/mehr-ladestationen-in-hamburg-aber-begrenzte-nutzung.html</guid>
+        
+        
+        <category>eMobility</category>
+        
+      </item>
+    
+      <item>
+        <title>Hamburg is investing strongly into their charging infrastructure, but daily usage remains limited</title>
+        <description>&lt;p&gt;Hamburg is very much at the forefront of e-Mobility in Germany – in parts thanks to an ambitious government-driven “masterplan” for charging stations. Until the end of 2017 Hamburg deployed more than 600 public charging points at 300 locations throughout the city. An additional 400 charging points are expected to be online until 2019. The goal is to break the catch-22 situation of people avoiding the purchase of electric cars due to the limited charging infrastructure.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Thanks to a recent &lt;a href=&quot;https://www.now-gmbh.de/content/1-aktuelles/1-presse/20180226-fachkonf-bundesfoerderung-bringt-elektromobilitaet-entscheidend-voran/tag-2_2-2-2_zisler-hamburg.pdf&quot;&gt;public presentation&lt;/a&gt; of a representative of Stromnetz Hamburg, the company in charge of building the infrastructure, we now have a much better picture of the public uptake (see the chart below). As you can see, Hamburg has indeed been busy deploying new charging stations at a steady pace. From mid 2016 until mid 2017 the number of public stations grew by more than 50%. This compares to a 36% growth in electric cars in Hamburg within the same time frame.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Not surprisingly considering these two figures, the number of daily transactions per station remained largely flat with some fluctuation that might be explained by seasonality effects (e.g., increased usage of electric DriveNow cars during winter, higher battery consumption in the cold, …). Similarly, kilowatt hours per transaction stayed roughly flat fluctuating between 9 and 12 kWh.&lt;/p&gt;
+
+&lt;p&gt;Striking are the low absolute numbers. At just ~1 daily transaction per station, most stations seem to be heavily underutilized. However, it is important to note that there seems to be a high variability across stations. As remarked in a recently published report of the local government&lt;sup id=&quot;fnref:2:1&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;, some locations see as many as 8 transactions per day.&lt;/p&gt;
+
+&lt;p&gt;While it would be nice to see a bigger uptake of the public charging infrastructure, it is great to see that the city of Hamburg is willing to invest for the long-term. More so, it is commendable that Hamburg decided to not just focus on the sweet spots in the city center but to also build locations outside the center. This should greatly help to make the case to the public that Hamburg is ready for the growth in e-Mobility.&lt;/p&gt;
+
+&lt;div class=&quot;chart-container&quot; style=&quot;position: relative; min-height:400px&quot;&gt;
+&lt;canvas id=&quot;chargingChart1&quot;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+  };
+  var ctx = document.getElementById(&quot;chargingChart1&quot;).getContext('2d');
+  Chart.defaults.global.defaultFontSize = 16;
+  Chart.defaults.global.defaultFontColor = '#111';
+  Chart.defaults.global.maintainAspectRatio = false;
+  var chargingChart1 = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: [&quot;Jul 16&quot;,	&quot;Aug 16&quot;,	&quot;Sep 16&quot;,	&quot;Oct 16&quot;,	&quot;Nov 16&quot;,	&quot;Dec 16&quot;,	&quot;Jan 17&quot;,	&quot;Feb 17&quot;,	&quot;Mar 17&quot;,	&quot;Apr 17&quot;,	&quot;May 17&quot;,	&quot;Jun 17&quot;,	&quot;Jul 17&quot;,	&quot;Aug 17&quot;,	&quot;Sep 17&quot;,	&quot;Oct 17&quot;,	&quot;Nov 17&quot;,	&quot;Dec 17&quot;,	&quot;Jan 18&quot;],
+
+          datasets: [{
+            label: 'Charging locations (Stromnetz Hamburg)',
+            borderColor: window.chartColors.blue,
+            backgroundColor: window.chartColors.blue,
+            fill: false,
+            data: [
+              108,	114,	123,	132,	134,	138,	146,	148,	160,	180,	197,	206,	220,	249,	274,	297,	309,	311,	324
+            ],
+            yAxisID: 'y-axis-1',
+          }, {
+            label: 'Transactions / location / day',
+            borderColor: window.chartColors.red,
+            backgroundColor: window.chartColors.red,
+            fill: false,
+            data: [
+              0.9,	0.78,	0.83,	0.8,	0.93,	0.98,	0.97,	0.95,	0.91,	0.82,	0.79,	0.73,	0.67,	0.68,	0.7,	0.74,	0.87,	0.96,	1.06
+            ],
+            yAxisID: 'y-axis-2'
+          }]
+
+      },
+      options: {
+          responsive: true,
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+            display: true,
+            text: 'Transactions at the public charging points in Hamburg'
+          },
+          scales: {
+              yAxes: [{
+                type: 'linear', 
+                display: true,
+                position: 'left',
+                ticks: {
+                  beginAtZero: true
+                },
+              	scaleLabel: {
+                	display: true,
+                  labelString: 'Locations'
+                },
+                id: 'y-axis-1'
+              }, {
+                type: 'linear', 
+                beginAtZero: true,
+                display: true,
+                position: 'right',
+                ticks: {
+                  beginAtZero: true
+                },
+              	scaleLabel: {
+                	display: true,
+                  labelString: 'Transactions / location / day'
+                },
+                id: 'y-axis-2',
+
+                gridLines: {
+                  drawOnChartArea: false
+                },
+              }],
+            }
+
+      }
+  });
+&lt;/script&gt;
+
+&lt;p&gt;&lt;em&gt;Source: Stromnetz Hamburg&lt;sup id=&quot;fnref:1:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;Ladeinfrastruktur und Netzintegration, 5. Fachkonferenz Elektromobilität vor Ort, 27. Feb 2018 Leipzig &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt; &lt;a href=&quot;#fnref:1:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;Drucksache 21/10349, Buergerschaft der Freien und Hansestadt Hamburg, 12. Sep 2017 &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt; &lt;a href=&quot;#fnref:2:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sat, 10 Mar 2018 12:05:31 +0100</pubDate>
+        <link>https://www.florianheinemann.com/emobility/2018/03/10/more-charging-points-in-hamburg-but-still-limited-uptake.html</link>
+        <guid isPermaLink="true">https://www.florianheinemann.com/emobility/2018/03/10/more-charging-points-in-hamburg-but-still-limited-uptake.html</guid>
+        
+        
+        <category>eMobility</category>
+        
+      </item>
+    
+      <item>
+        <title>Corporate Accelerators: A Study on Prevalence, Sponsorship, and Strategy</title>
+        <description>&lt;p&gt;I just finished my Master’s thesis about Corporate Accelerators. It covers macro-level trends such as growth and prevalence among large corporation in addition to questions about the sponsorship and strategy of such programs. The thesis will be available through regular library access soon, but is also available as free &lt;a href=&quot;/assets/ThesisFlorianHeinemannCorporateAccelerators.pdf&quot;&gt;download&lt;/a&gt; here.&lt;/p&gt;
+
+&lt;h1 id=&quot;abstract&quot;&gt;Abstract&lt;/h1&gt;
+&lt;p&gt;In recent years, corporate accelerators have emerged as a new method to foster collaboration between startups and established companies. This thesis presents, to my knowledge, the first comprehensive database of corporate accelerator programs across the globe. On the basis of this resource, I propose a definition for corporate accelerators and show that they follow the same basic principles as non-corporate accelerators. Further, I provide evidence that corporate accelerators have been growing considerably over the past few years and have reached a level of presence close to that of corporate venture capital funds. While growth has been slowing down recently, I argue that corporate accelerators are well-suited to becoming a permanent element in the startup ecosystem and that they are likely to capture market share from non-corporate accelerators. On the basis of a population of 847 largely capitalized corporations I show that corporate accelerators are more frequently sponsored by large, information-related firms that are also investing corporate venture capital. This study provides first indications that corporate accelerators are not likely to deliver direct operating profits to the sponsoring firms. However, I provide examples of significant strategic explorations, including companies that select portfolio firms to help them innovate along their supply chain and distribution channels or to provide them with strategic gains in the marketplace.&lt;/p&gt;
+
+&lt;h1 id=&quot;cite&quot;&gt;Cite&lt;/h1&gt;
+&lt;p&gt;Heinemann, Florian. 2015. “Corporate Accelerators: A Study on Prevalence, Sponsorship, and Strategy.” Master’s Thesis, Cambridge: Massachusetts Institute of Technology.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 10 Aug 2015 13:05:31 +0200</pubDate>
+        <link>https://www.florianheinemann.com/innovation/2015/08/10/Corporate-Accelerators.html</link>
+        <guid isPermaLink="true">https://www.florianheinemann.com/innovation/2015/08/10/Corporate-Accelerators.html</guid>
+        
+        
+        <category>innovation</category>
+        
+      </item>
+    
+      <item>
+        <title>Corporate Accelerator database launched</title>
+        <description>&lt;p&gt;As part of my thesis on &lt;em&gt;Corporate Accelerators&lt;/em&gt; I’ve published a first set of data on a separate website aimed to create a comprehensive &lt;a href=&quot;https://corporate-accelerators.net/database/index.html&quot;&gt;list of Corporate Accelerators&lt;/a&gt;. Comments about additional programs are highly welcome and can be directly posted on &lt;a href=&quot;https://github.com/florianheinemann/www-corporate-accelerators-net&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 17 Jun 2015 15:05:31 +0200</pubDate>
+        <link>https://www.florianheinemann.com/innovation/entrepreneurship/2015/06/17/corporate-accelerator-database.html</link>
+        <guid isPermaLink="true">https://www.florianheinemann.com/innovation/entrepreneurship/2015/06/17/corporate-accelerator-database.html</guid>
+        
+        
+        <category>innovation</category>
+        
+        <category>entrepreneurship</category>
+        
+      </item>
     
       <item>
         <title>Antifragility, Evolution, and Entrepreneurship</title>
@@ -22,17 +673,17 @@
 
 &lt;p&gt;All those models still had a strong passively reactive view on their environment. This changed in the 1980s when we saw a sudden spike of interest in understanding the world outside the firm. New concepts such as game theory came up which helped to better model future states of other actors and we also saw the emergence of Porter’s five-forces; a framework which provided a better view on a complex external world and allowed managers to more effectively position their firms in their respective environment.&lt;/p&gt;
 
-&lt;p&gt;While at that time the importance of an external perspective had already emerged and it was already widely accepted that the future was difficult to predict, it took the 1990s to bring these ideas full circle: The emergence of Dynamic Capabilities. Suddenly, people, interactions among them, shared knowledge, processes, and technical capabilities were not anymore seen as liabilities but as an asset that could be shaped and re-configured to answer new, to the managers beforehand unknown challenges. Managers were asked to actively look out for new opportunities that could be seized. I believe these insights were critical stepping stones in enabling today’s entrepreneurship culture: The consideration that the internal capabilities (incl. the product!) are important but not static. That they shall evolve with the company’s customers and more importantly with the visionary insights of the management. &lt;/p&gt;
+&lt;p&gt;While at that time the importance of an external perspective had already emerged and it was already widely accepted that the future was difficult to predict, it took the 1990s to bring these ideas full circle: The emergence of Dynamic Capabilities. Suddenly, people, interactions among them, shared knowledge, processes, and technical capabilities were not anymore seen as liabilities but as an asset that could be shaped and re-configured to answer new, to the managers beforehand unknown challenges. Managers were asked to actively look out for new opportunities that could be seized. I believe these insights were critical stepping stones in enabling today’s entrepreneurship culture: The consideration that the internal capabilities (incl. the product!) are important but not static. That they shall evolve with the company’s customers and more importantly with the visionary insights of the management.&lt;/p&gt;
 
 &lt;p&gt;The critical new element which today’s entrepreneurs bring to the table, is the insight of not only seeing their companies as evolving (or “pivoting”) but also considering their own abilities as limited and hence improving together with their companies. Increasingly failures are not anymore seen as a weakness but as a quintessential graduation to more challenging startup ideas.&lt;/p&gt;
 
 &lt;p&gt;The earlier insights, though, stayed: Agile process models, Minimum Viable Products, and Design Thinking are nowadays mainstays of the startup scene and are just the latest chapters in the collection of management tools that allow a company to survive in an uncertain world by testing their markets. Some of the proposed frameworks are even pushing the boundaries so far, that it is nowadays seen as acceptable to sell products into a market without having any certainty that there will be demand for it. Similarly, today’s entrepreneurs have not only learned the lessons of the past with respect of learning from the external world but further expanded on it. Most young companies will assert that they consider their customers at the very heart of their corporate strategy, as a bridge to the external world which helps to constantly shape and improve their company’s products. These are views which would have been unheard of 100 years ago. While it might be easy to dismiss these statements as corporate buzzwords, I believe they are mostly rooted in conviction. Stanford&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and MIT&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;, arguably the leading universities nurturing entrepreneurship in the world, preach customer-centricity in their courses and less-than-perfect customer service is anecdotally seen by young people as a relic of the remaining old-world companies but certainly not something one would expect from the likes of Amazon, AirBnB, and Teespring.&lt;/p&gt;
 
-&lt;p&gt;The churn rate of today’s startups is also interesting to observe. Small enterprises are a substantial net contributor to job growth&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; but this comes at the cost of individual stability. Young companies incorporate, start employing people, but more often than not fail.&lt;sup id=&quot;fnref:5&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt; But should we consider this as a failure? Nassim Taleb would argue that we shouldn’t. In his book Antifragile he emphasizes the importance of small failures to stabilize and evolve an overall system.&lt;sup id=&quot;fnref:6&quot;&gt;&lt;a href=&quot;#fn:6&quot; class=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt; At the example of restaurants he makes the point that we would likely have a very unsatisfactory dining experience without the failure of some entrepreneurs. With every restaurant that fails, the collective knowledge grows. Business models are proven or disproven and creative ideas get new space with the failures of others. Over time, we experience countless local failures, but at the same time we see the emergence of a new, much more stable restaurant ecosystem that is collectively not only delivering more value to its customers but also positively embracing future changes. He calls this attribute the antifragility of the system. &lt;/p&gt;
+&lt;p&gt;The churn rate of today’s startups is also interesting to observe. Small enterprises are a substantial net contributor to job growth&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; but this comes at the cost of individual stability. Young companies incorporate, start employing people, but more often than not fail.&lt;sup id=&quot;fnref:5&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt; But should we consider this as a failure? Nassim Taleb would argue that we shouldn’t. In his book Antifragile he emphasizes the importance of small failures to stabilize and evolve an overall system.&lt;sup id=&quot;fnref:6&quot;&gt;&lt;a href=&quot;#fn:6&quot; class=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt; At the example of restaurants he makes the point that we would likely have a very unsatisfactory dining experience without the failure of some entrepreneurs. With every restaurant that fails, the collective knowledge grows. Business models are proven or disproven and creative ideas get new space with the failures of others. Over time, we experience countless local failures, but at the same time we see the emergence of a new, much more stable restaurant ecosystem that is collectively not only delivering more value to its customers but also positively embracing future changes. He calls this attribute the antifragility of the system.&lt;/p&gt;
 
 &lt;p&gt;Entrepreneurs are certainly not the rational actors as earlier management theory imagined managers to be. They are overconfident when they believe in their personal success no matter the odds they face. But as Taleb suggests: Selected overconfidence on a small scale is much preferable to a global overconfidence, as we’ve seen it during the great recession.&lt;sup id=&quot;fnref:7&quot;&gt;&lt;a href=&quot;#fn:7&quot; class=&quot;footnote&quot;&gt;7&lt;/a&gt;&lt;/sup&gt; And the overconfidence is confined not only to the individual entrepreneurs and their companies, but also it is limited to the financial sphere. What gets unshackled, though, is the learning experience the entrepreneurs go through. It will help them to be more successful the next time and it will support any other entrepreneur who is looking for lessons learnt. Today’s entrepreneurs are unprecedented in the amount of knowledge that they pass on to their peers. Books are written as open source documents, business templates shared freely online, and countless blogs about startup learnings are being published.&lt;/p&gt;
 
-&lt;p&gt;Communities such as WeWork&lt;sup id=&quot;fnref:8&quot;&gt;&lt;a href=&quot;#fn:8&quot; class=&quot;footnote&quot;&gt;8&lt;/a&gt;&lt;/sup&gt; also show another prospective of today’s management culture: Companies share their resources, build mutually beneficial networks between each other, and lend each other a hand when there are times of hardship. It’s not that competition has disappeared, but that the world has reached such a level of complexity and rate of change, that it is rarer and rarer to have two entrepreneurs in a room that compete with each other in the same niche but more and more likely that they either build on top of each other’s services, or offer complementary products. &lt;/p&gt;
+&lt;p&gt;Communities such as WeWork&lt;sup id=&quot;fnref:8&quot;&gt;&lt;a href=&quot;#fn:8&quot; class=&quot;footnote&quot;&gt;8&lt;/a&gt;&lt;/sup&gt; also show another prospective of today’s management culture: Companies share their resources, build mutually beneficial networks between each other, and lend each other a hand when there are times of hardship. It’s not that competition has disappeared, but that the world has reached such a level of complexity and rate of change, that it is rarer and rarer to have two entrepreneurs in a room that compete with each other in the same niche but more and more likely that they either build on top of each other’s services, or offer complementary products.&lt;/p&gt;
 
 &lt;p&gt;While the world I have described above is not yet the reality for most of us, I strongly believe that we can learn a lot from those working at the edge of management practice. The past has shown that it is usually the practitioners who dare first to take the next steps and advance our understanding of the world. At times where large corporations and banks collapse with disastrous effects, I believe strategic management theory and large corporations alike can learn a lot by more strongly embracing the approach of startups of staying closer to their customers and partners and of accepting uncertainty by failing small and fast. This might not only be a path towards more stability and value generation in today’s world, but also an almost logical next stepping stone building on top of 100 years of management theory.&lt;/p&gt;
 
@@ -66,11 +717,11 @@
 &lt;/div&gt;
 </description>
         <pubDate>Fri, 21 Nov 2014 10:02:34 +0100</pubDate>
-        <link>http://www.florianheinemann.com/entrepreneuship/2014/11/21/entrepreneurship-antifragility-evolution.html</link>
-        <guid isPermaLink="true">http://www.florianheinemann.com/entrepreneuship/2014/11/21/entrepreneurship-antifragility-evolution.html</guid>
+        <link>https://www.florianheinemann.com/entrepreneuship/2014/11/21/entrepreneurship-antifragility-evolution.html</link>
+        <guid isPermaLink="true">https://www.florianheinemann.com/entrepreneuship/2014/11/21/entrepreneurship-antifragility-evolution.html</guid>
         
         
-        <category>entrepreneuship</category>
+        <category>entrepreneurship</category>
         
       </item>
     
@@ -84,25 +735,25 @@
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Add a file called &lt;code&gt;.env&lt;/code&gt; to the root of your website directory. The file should have the following content: &lt;code&gt;export BUILDPACK_URL=https://github.com/florianheinemann/buildpack-nginx.git&lt;/code&gt;&lt;/p&gt;
+    &lt;p&gt;Add a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;.env&lt;/code&gt; to the root of your website directory. The file should have the following content: &lt;code class=&quot;highlighter-rouge&quot;&gt;export BUILDPACK_URL=https://github.com/florianheinemann/buildpack-nginx.git&lt;/code&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Add second, &lt;em&gt;empty&lt;/em&gt; file called &lt;code&gt;.static&lt;/code&gt; to the same directory&lt;/p&gt;
+    &lt;p&gt;Add second, &lt;em&gt;empty&lt;/em&gt; file called &lt;code class=&quot;highlighter-rouge&quot;&gt;.static&lt;/code&gt; to the same directory&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Push your project to Dokku: &lt;code&gt;git push [your server] master&lt;/code&gt;&lt;/p&gt;
+    &lt;p&gt;Push your project to Dokku: &lt;code class=&quot;highlighter-rouge&quot;&gt;git push [your server] master&lt;/code&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;The static files that you want to host should be similarly in the root directory together with the &lt;code&gt;.env&lt;/code&gt; and &lt;code&gt;.static&lt;/code&gt; file. Don’t worry, those two files will not be served.&lt;/p&gt;
+&lt;p&gt;The static files that you want to host should be similarly in the root directory together with the &lt;code class=&quot;highlighter-rouge&quot;&gt;.env&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;.static&lt;/code&gt; file. Don’t worry, those two files will not be served.&lt;/p&gt;
 
 &lt;p&gt;The first push will take a bit longer as the buildpack is downloading all the relevant source codes and compiling the packages, but every new push will reuse the already pre-compiled files making it a lot faster the second time round.&lt;/p&gt;
 
 &lt;p&gt;This buildpack has been successfully run on Digital Ocean instances of Ubuntu 14.04 and I assume that other configurations might work as well. Let me know if you successfully used the buildpack in different configurations.&lt;/p&gt;
 </description>
         <pubDate>Mon, 17 Nov 2014 12:05:31 +0100</pubDate>
-        <link>http://www.florianheinemann.com/github/dokku/2014/11/17/Hosting-static-pages-on-Dokku.html</link>
-        <guid isPermaLink="true">http://www.florianheinemann.com/github/dokku/2014/11/17/Hosting-static-pages-on-Dokku.html</guid>
+        <link>https://www.florianheinemann.com/github/dokku/2014/11/17/Hosting-static-pages-on-Dokku.html</link>
+        <guid isPermaLink="true">https://www.florianheinemann.com/github/dokku/2014/11/17/Hosting-static-pages-on-Dokku.html</guid>
         
         
         <category>github</category>
@@ -115,7 +766,7 @@
         <title>Passwordless authentication: Secure, simple, and fast to deploy</title>
         <description>&lt;p&gt;&lt;a href=&quot;https://passwordless.net&quot;&gt;Passwordless&lt;/a&gt; is an authentication middleware for Node.js that improves security for your users while being fast and easy to deploy.&lt;/p&gt;
 
-&lt;p&gt;The last months were very exciting for everyone interested in web security and privacy: Fantastic &lt;a href=&quot;https://medium.com/@ninjudd/passwords-are-obsolete-9ed56d483eb&quot;&gt;articles&lt;/a&gt;, &lt;a href=&quot;https://news.ycombinator.com/item?id=7943365&quot;&gt;discussions&lt;/a&gt;, and talks but also plenty of &lt;a href=&quot;http://dealbook.nytimes.com/2014/10/03/hackers-attack-cracked-10-banks-in-major-assault/?_php=true&amp;amp;_type=blogs&amp;amp;_r=0&quot;&gt;incidents&lt;/a&gt; that raised awareness. &lt;/p&gt;
+&lt;p&gt;The last months were very exciting for everyone interested in web security and privacy: Fantastic &lt;a href=&quot;https://medium.com/@ninjudd/passwords-are-obsolete-9ed56d483eb&quot;&gt;articles&lt;/a&gt;, &lt;a href=&quot;https://news.ycombinator.com/item?id=7943365&quot;&gt;discussions&lt;/a&gt;, and talks but also plenty of &lt;a href=&quot;http://dealbook.nytimes.com/2014/10/03/hackers-attack-cracked-10-banks-in-major-assault/?_php=true&amp;amp;_type=blogs&amp;amp;_r=0&quot;&gt;incidents&lt;/a&gt; that raised awareness.&lt;/p&gt;
 
 &lt;p&gt;Most websites are, however, still stuck with the same authentication mechanism as from the earliest days of the web: username and password.&lt;/p&gt;
 
@@ -128,86 +779,88 @@
 &lt;h1 id=&quot;getting-started-on-nodejs--express&quot;&gt;Getting started on Node.js &amp;amp; Express&lt;/h1&gt;
 &lt;p&gt;Getting started with Passwordless is straight-forward and you’ll be able to deploy a fully fledged and secure authentication solution for a small project within two hours:&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;$ npm install passwordless --save&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ npm install passwordless --save&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;gets you the basic framework. You’ll also want to install one of the existing &lt;a href=&quot;https://passwordless.net/plugins&quot;&gt;storage interfaces&lt;/a&gt; such as &lt;a href=&quot;https://github.com/florianheinemann/passwordless-mongostore&quot;&gt;MongoStore&lt;/a&gt; which store the tokens securely:&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;$ npm install passwordless-mongostore --save&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ npm install passwordless-mongostore --save&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;To deliver the tokens to the users, email would be the most common option (but text message is also feasible) and you’re free to pick any of the existing email frameworks such as:&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;$ npm install emailjs --save&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ npm install emailjs --save&lt;/code&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;setting-up-the-basics&quot;&gt;Setting up the basics&lt;/h1&gt;
 &lt;p&gt;Let’s require all of the above mentioned modules in the same file that you use to initialise Express:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;passwordless&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MongoStore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;passwordless-mongostore&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;emailjs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'passwordless'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MongoStore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'passwordless-mongostore'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;emailjs&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;If you’ve chosen &lt;a href=&quot;http://emailjs.org&quot;&gt;emailjs&lt;/a&gt; for delivery that would also be a great moment to connect it to your email account (e.g. a Gmail account): &lt;/p&gt;
+&lt;p&gt;If you’ve chosen &lt;a href=&quot;http://emailjs.org&quot;&gt;emailjs&lt;/a&gt; for delivery that would also be a great moment to connect it to your email account (e.g. a Gmail account):&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;smtpServer&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;smtpServer&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
    &lt;span class=&quot;na&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;    &lt;span class=&quot;nx&quot;&gt;yourEmail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
    &lt;span class=&quot;na&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;yourPwd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
    &lt;span class=&quot;na&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;    &lt;span class=&quot;nx&quot;&gt;yourSmtp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
    &lt;span class=&quot;na&quot;&gt;ssl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;     &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The final preliminary step would be to tell Passwordless which storage interface you’ve chosen above and to initialise it:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Your MongoDB TokenStore&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pathToMongoDb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;mongodb://localhost/passwordless-simple-mail&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MongoStore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pathToMongoDb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Your MongoDB TokenStore&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pathToMongoDb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'mongodb://localhost/passwordless-simple-mail'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MongoStore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pathToMongoDb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h1 id=&quot;delivering-a-token&quot;&gt;Delivering a token&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;passwordless.addDelivery(deliver)&lt;/code&gt; adds a new delivery mechanism. &lt;code&gt;deliver&lt;/code&gt; is called whenever a token has to be sent. By default, the mechanism you choose should provide the user with a link in the following format:&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;passwordless.addDelivery(deliver)&lt;/code&gt; adds a new delivery mechanism. &lt;code class=&quot;highlighter-rouge&quot;&gt;deliver&lt;/code&gt; is called whenever a token has to be sent. By default, the mechanism you choose should provide the user with a link in the following format:&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;http://www.example.com/token={TOKEN}&amp;amp;uid={UID}&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;http://www.example.com/token={TOKEN}&amp;amp;uid={UID}&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;deliver&lt;/code&gt; will be called with all the needed details. Hence, the delivery of the token (in this case with emailjs) can be as easy as:&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deliver&lt;/code&gt; will be called with all the needed details. Hence, the delivery of the token (in this case with emailjs) can be as easy as:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addDelivery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addDelivery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;tokenToSend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;uidToSend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;recipient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;localhost:3000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+		&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'localhost:3000'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 		&lt;span class=&quot;nx&quot;&gt;smtpServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-			&lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;    &lt;span class=&quot;s1&quot;&gt;&#39;Hello!\nAccess your account here: http://&#39;&lt;/span&gt; 
-			&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;?token=&#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tokenToSend&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;&amp;amp;uid=&#39;&lt;/span&gt; 
+			&lt;span class=&quot;na&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;    &lt;span class=&quot;s1&quot;&gt;'Hello!\nAccess your account here: http://'&lt;/span&gt; 
+			&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'?token='&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;tokenToSend&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&amp;amp;uid='&lt;/span&gt; 
 			&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;encodeURIComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;uidToSend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; 
 			&lt;span class=&quot;na&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;    &lt;span class=&quot;nx&quot;&gt;yourEmail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
 			&lt;span class=&quot;na&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;      &lt;span class=&quot;nx&quot;&gt;recipient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-			&lt;span class=&quot;na&quot;&gt;subject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;Token for &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;host&lt;/span&gt;
+			&lt;span class=&quot;na&quot;&gt;subject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Token for '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;host&lt;/span&gt;
 		&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
 			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 				&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 			&lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 		&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h1 id=&quot;initialising-the-express-middleware&quot;&gt;Initialising the Express middleware&lt;/h1&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sessionSupport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;acceptToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;successRedirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;/&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sessionSupport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;acceptToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;successRedirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;&lt;code&gt;sessionSupport()&lt;/code&gt; makes the login persistent, so the user will stay logged in while browsing your site. Please make sure that you’ve already prepared your session middleware (such as &lt;a href=&quot;https://github.com/expressjs/session&quot;&gt;express-session&lt;/a&gt;) beforehand.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sessionSupport()&lt;/code&gt; makes the login persistent, so the user will stay logged in while browsing your site. Please make sure that you’ve already prepared your session middleware (such as &lt;a href=&quot;https://github.com/expressjs/session&quot;&gt;express-session&lt;/a&gt;) beforehand.&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;acceptToken()&lt;/code&gt; will intercept any incoming tokens, authenticate users, and redirect them to the correct page. While the option &lt;code&gt;successRedirect&lt;/code&gt; is not strictly needed, it is strongly recommended to use it to avoid leaking valid tokens via the referrer header of outgoing HTTP links on your site.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;acceptToken()&lt;/code&gt; will intercept any incoming tokens, authenticate users, and redirect them to the correct page. While the option &lt;code class=&quot;highlighter-rouge&quot;&gt;successRedirect&lt;/code&gt; is not strictly needed, it is strongly recommended to use it to avoid leaking valid tokens via the referrer header of outgoing HTTP links on your site.&lt;/p&gt;
 
 &lt;h1 id=&quot;routing--authenticating&quot;&gt;Routing &amp;amp; Authenticating&lt;/h1&gt;
-&lt;p&gt;The following takes for granted that you’ve already setup your router &lt;code&gt;var router = express.Router();&lt;/code&gt; as explained in the &lt;a href=&quot;http://expressjs.com/4x/api.html#router&quot;&gt;express docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The following takes for granted that you’ve already setup your router &lt;code class=&quot;highlighter-rouge&quot;&gt;var router = express.Router();&lt;/code&gt; as explained in the &lt;a href=&quot;http://expressjs.com/4x/api.html#router&quot;&gt;express docs&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;You will need at least two URLs to:
-* Display a page asking for the user’s email
-* Accept the form details (via POST)&lt;/p&gt;
+&lt;p&gt;You will need at least two URLs to:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Display a page asking for the user’s email&lt;/li&gt;
+  &lt;li&gt;Accept the form details (via POST)&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* GET: login screen */&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;/login&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;login&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* GET: login screen */&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/login'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'login'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
 
 &lt;span class=&quot;cm&quot;&gt;/* POST: login details */&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;/sendtoken&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/sendtoken'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
 	&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 		&lt;span class=&quot;c1&quot;&gt;// TODO: Input validation&lt;/span&gt;
 	&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
@@ -225,7 +878,7 @@
 					&lt;span class=&quot;c1&quot;&gt;// If the user couldn’t be found: Create it!&lt;/span&gt;
 					&lt;span class=&quot;c1&quot;&gt;// You can also implement a dedicated route &lt;/span&gt;
 					&lt;span class=&quot;c1&quot;&gt;// to e.g. capture more user details&lt;/span&gt;
-					&lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+					&lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
 						&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 							&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 								&lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
@@ -238,20 +891,20 @@
 	&lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 		&lt;span class=&quot;c1&quot;&gt;// Success! Tell your users that their token is on its way&lt;/span&gt;
-		&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;sent&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+		&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'sent'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;What happens here? &lt;code&gt;passwordless.requestToken(getUserId)&lt;/code&gt; has two tasks: Making sure the email address exists &lt;em&gt;and&lt;/em&gt; transforming it into a unique user ID that can be sent out via email and can be used for identifying users later on. Usually, you’ll already have a model that is taking care of storing your user details and you can simply interact with it as shown in the example above.&lt;/p&gt;
+&lt;p&gt;What happens here? &lt;code class=&quot;highlighter-rouge&quot;&gt;passwordless.requestToken(getUserId)&lt;/code&gt; has two tasks: Making sure the email address exists &lt;em&gt;and&lt;/em&gt; transforming it into a unique user ID that can be sent out via email and can be used for identifying users later on. Usually, you’ll already have a model that is taking care of storing your user details and you can simply interact with it as shown in the example above.&lt;/p&gt;
 
 &lt;p&gt;In some cases (think of a blog edited by just a couple of users) you can also skip the user model entirely and just hardwire valid email addresses with their respective IDs:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;marc@example.com&#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;alice@example.com&#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'marc@example.com'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'alice@example.com'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
 
 &lt;span class=&quot;cm&quot;&gt;/* POST: login details */&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;/sendtoken&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/sendtoken'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
 	&lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;requestToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
 		&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;delivery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 			&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -261,12 +914,12 @@
 			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 			&lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 		&lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt;
-		&lt;span class=&quot;c1&quot;&gt;// Same as above…&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+		&lt;span class=&quot;c1&quot;&gt;// Same as above…&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h1 id=&quot;html-pages&quot;&gt;HTML pages&lt;/h1&gt;
-&lt;p&gt;All it needs is a simple HTML form capturing the user’s email address. By default, Passwordless will look for an input field called &lt;code&gt;user&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;All it needs is a simple HTML form capturing the user’s email address. By default, Passwordless will look for an input field called &lt;code class=&quot;highlighter-rouge&quot;&gt;user&lt;/code&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
 	&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
 		&lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Login&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
 		&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/sendtoken&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;POST&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
@@ -275,31 +928,31 @@
 			&lt;span class=&quot;nt&quot;&gt;&amp;lt;br&amp;gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Login&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
 		&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
 	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h1 id=&quot;protecting-your-pages&quot;&gt;Protecting your pages&lt;/h1&gt;
 &lt;p&gt;Passwordless offers middleware to ensure only authenticated users get to see certain pages:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* Protect a single page */&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;/restricted&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;restricted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/* Protect a single page */&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/restricted'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;restricted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;c1&quot;&gt;// render the secret page&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
 
 &lt;span class=&quot;cm&quot;&gt;/* Protect a path with all its children */&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;/admin&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;restricted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/admin'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;restricted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h1 id=&quot;who-is-logged-in&quot;&gt;Who is logged in?&lt;/h1&gt;
-&lt;p&gt;By default, Passwordless makes the user ID available through the request object: &lt;code&gt;req.user&lt;/code&gt;. To display or reuse the ID it to pull further details from the database you can do the following:&lt;/p&gt;
+&lt;p&gt;By default, Passwordless makes the user ID available through the request object: &lt;code class=&quot;highlighter-rouge&quot;&gt;req.user&lt;/code&gt;. To display or reuse the ID it to pull further details from the database you can do the following:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;/admin&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;restricted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/admin'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passwordless&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;restricted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;admin&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+		&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'admin'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Or, more generally, you can add another middleware that pulls the whole user record from your model and makes it available to any route on your site:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 		&lt;span class=&quot;nx&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;findById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 			&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;locals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -308,7 +961,7 @@
 	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
 		&lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h1 id=&quot;thats-it&quot;&gt;That’s it!&lt;/h1&gt;
 &lt;p&gt;That’s all it takes to let your users authenticate securely and easily. For more details you should check out the &lt;a href=&quot;https://passwordless.net/deepdive&quot;&gt;deep dive&lt;/a&gt; which explains all the options and the &lt;a href=&quot;https://github.com/florianheinemann/passwordless/tree/master/examples/simple-mail&quot;&gt;example&lt;/a&gt; that will show you how to integrate all of the things above into a working solution.&lt;/p&gt;
@@ -325,8 +978,8 @@
 &lt;p&gt;This blog post has been published on &lt;a href=&quot;https://hacks.mozilla.org/2014/10/passwordless-authentication-secure-simple-and-fast-to-deploy/&quot;&gt;Mozilla Hacks&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Thu, 06 Nov 2014 12:20:43 +0100</pubDate>
-        <link>http://www.florianheinemann.com/github/authentication/passwordless/2014/11/06/passwordless-token-based-auth.html</link>
-        <guid isPermaLink="true">http://www.florianheinemann.com/github/authentication/passwordless/2014/11/06/passwordless-token-based-auth.html</guid>
+        <link>https://www.florianheinemann.com/github/authentication/passwordless/2014/11/06/passwordless-token-based-auth.html</link>
+        <guid isPermaLink="true">https://www.florianheinemann.com/github/authentication/passwordless/2014/11/06/passwordless-token-based-auth.html</guid>
         
         
         <category>github</category>
@@ -334,6 +987,51 @@
         <category>authentication</category>
         
         <category>passwordless</category>
+        
+      </item>
+    
+      <item>
+        <title>8 years of Enterprise 2.0</title>
+        <description>&lt;p&gt;In preparation of my talk at the &lt;a href=&quot;http://www.marcusevans-conferences-german.com/marcusevans-conferences-event-details.asp?EventID=20701#.UwER70JdXbk&quot;&gt;Portal and Social Collaboration Days 2014&lt;/a&gt; in Berlin, I’d like to share my main talking points in advance.&lt;/p&gt;
+
+&lt;p&gt;It is roughly 8 years ago that Andrew McAfee coined the term &lt;a href=&quot;http://andrewmcafee.org/2006/05/enterprise_20_version_20/&quot;&gt;Enterprise 2.0&lt;/a&gt;. Since then a lot has happened and many practitioners have years of experience under their belt. So where are we in the world of Enterprise 2.0 and what is ahead?&lt;/p&gt;
+
+&lt;p&gt;I believe it is fair to say that we are quite a bit away from the hype around social technology that we experienced several years ago. Knowing that Google Trend statistics are &lt;a href=&quot;https://www.facebook.com/notes/mike-develin/debunking-princeton/10151947421191849&quot;&gt;not&lt;/a&gt; the most scientific source of information, it is still interesting to see that after a lot of activity between 2006 and 2010 &lt;a href=&quot;http://www.google.com/trends/explore#q=%22enterprise%202.0%22&amp;amp;date=1%2F2006%2098m&amp;amp;cmpt=q&quot;&gt;less and less&lt;/a&gt; people have been feeling the need to search for the term Enterprise 2.0.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/enterprise20-chart.png&quot; alt=&quot;Google Trends on Enterprise 2.0&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In parallel, I’ve noticed that over the last one or two years the mood of &lt;a href=&quot;http://enterprise20blog.com/2014/02/08/luis-suarez-make-social-work-needs-business-purpose/&quot;&gt;conferences&lt;/a&gt;, &lt;a href=&quot;http://www.broadvision.com/blog/blog/2014/01/27/social-business-for-real-work/&quot;&gt;consultants&lt;/a&gt; and &lt;a href=&quot;http://postshift.com/the-limits-of-social-technology-within-existing-organisational-structure-and-culture/&quot;&gt;bloggers&lt;/a&gt; has evolved to something much more careful and considerate. The recent &lt;a href=&quot;http://www.digital-workplace-trends.com/&quot;&gt;Digital Workplace Trends report&lt;/a&gt; also paints a mixed picture of some successes but also a lot of work ahead for those who would like to implement social software at work.&lt;/p&gt;
+
+&lt;p&gt;Apart from many other things, I believe it is worth considering three things when assessing the status of Enterprise 2.0:&lt;/p&gt;
+
+&lt;p&gt;First, it is not only us as experts, implementers or consultants who have experienced the journey of social deployments throughout the last eight years. Employees and managers went through the same process but on the receiving end - making some good but also less positive experiences on the way. We should therefore not be surprised to face a more challenging deployment process than in the past. Rightly so, there is a much higher interest from the business to clearly understand the benefits, objectives and risks before any deployment.&lt;/p&gt;
+
+&lt;p&gt;Second, social media is ubiquitous outside work. Almost everyone, including C-level executives, are using social software at home. Be it as simple as browsing online boards for tips and tricks, maintaining a LinkedIn profile or going as far as tweeting about work or hobbies. The average age of those who are using social media has been growing steadily and &lt;a href=&quot;http://royal.pingdom.com/2012/08/21/report-social-network-demographics-in-2012/&quot;&gt;some solutions&lt;/a&gt; such as LinkedIn are coming very close to the age distribution of even the most conservative companies. These people have a certain expectation when thinking of social technology. They have experienced the great parts of the internet such as the Wikipedia but have also seen behaviour where they might struggle to see the connection to the workplace. Being confronted with statements from employees that they fear enterprise social networks might turn into an “internal Facebook” is hence less a result of unknowingness but of real experiences made outside work. Again, this is not as much a hurdle as it is an opportunity to shift the discussion away from the underlying technology (which by now most people know about) and to talk instead about the impacts onto employees’ working live.&lt;/p&gt;
+
+&lt;p&gt;Third, thanks to the NSA disclosures and recent hacks, employees and managers alike are much more careful about the security impact of Enterprise 2.0 solutions. Also data privacy concerns are much more likely to come up as a concern than in the past. It is interesting to observe the &lt;a href=&quot;http://www.reuters.com/article/2014/02/14/idUS78377901820140214&quot;&gt;backlash&lt;/a&gt; some companies experience when talking about Bring Your Own Device (BYOD) with a reported 70% of employees expressing privacy concerns.&lt;/p&gt;
+
+&lt;p&gt;I see all of that as very positive signs. As Gartner &lt;a href=&quot;http://www.gartner.com/newsroom/id/2579615&quot;&gt;puts it&lt;/a&gt;: For many of the typical Enterprise 2.0 solutions we went through the phase of inflated expectations, dropped into a period of disappointment and are now slowly ascending towards the plateau of productivity.&lt;/p&gt;
+
+&lt;p&gt;This positive trend is in my opinion supported by three evolutions which are core to the process.&lt;/p&gt;
+
+&lt;p&gt;Let me digress for a second. Do you remember the time when everyone was concerned about Foursquare being &lt;a href=&quot;http://readwrite.com/2012/12/18/why-foursquare-is-completely-redundant-and-completely-screwed-thanks-to-facebook#awesm=~ow49qNqWO3v5mr&quot;&gt;squeezed out of business&lt;/a&gt; by an adapting Facebook? The conversation has suddenly shifted drastically with Facebook being suddenly confronted with highly specialised competitors such as Snapchat, WhatsApp and Instagram (bought by Facebook). And even though Facebook has reacted in some ways to all of them, it is interesting to see that users seem to care much less about unifying their whole social experience into one tool. Is it about privacy concerns? Or about ease of use? It doesn’t really matter what it is but it should challenge our believe that we do have to necessarily offer a highly integrated toolset to our employees.&lt;/p&gt;
+
+&lt;p&gt;I would even claim the opposite: There is a much higher chance of success by adapting the strategy of the above mentioned start-ups and focussing on one use case per time instead of rolling out a full social media suite (as for example SharePoint) which might easily end up confusing employees more than brining real benefits to the business. Even more, who really has the resources to accompany such a technical rollout with the massive change, training and communication campaign that would be needed to support such a breadth of features? I am almost certain we will see more and more specialised deployments in large enterprises instead of bulldozer rollouts. Social media suites can clearly be underpinning those use cases as foundation and most of them offer the flexibility to do so. However full out-of-the-box deployments will make way for smaller but more adapted use cases.&lt;/p&gt;
+
+&lt;p&gt;On a different note, I believe we have reached a level of maturity where it becomes the norm to integrate social software deployments deeply into offline processes and where the business will also actively ask for such integration when being approached by Enterprise 2.0 evangelists. Such integrations can range from as simple as linking online Communities of Practice with offline events, to making sure that crowdsourcing campaigns are accompanied by a process that ensures real-world implementations, to real business process reengineering efforts.&lt;/p&gt;
+
+&lt;p&gt;Lastly, with such a level of experience on all sides, we can slowly question one of the pinnacles of Enterprise 2.0 deployments: starting with the needs. Social software enables entirely new business models and it is worth asking the question what we could do differently with the means that are available to us today. Companies such as GitHub are going as far as basically &lt;a href=&quot;http://www.fastcolabs.com/3020181/open-company/inside-githubs-super-lean-management-strategy-and-how-it-drives-innovation&quot;&gt;designing their governance&lt;/a&gt; around the way social software works. I believe we can do the same also in more traditional companies by fundamentally reconsidering the way we are doing business knowing that we can today, for example, easily engage a whole company on a certain topic. Easy starting points would be project management processes: Why do we have to keep early prototypes restricted to a handful of users in times where it could be a matter of seconds to open up a space to involve a broader set of future users?&lt;/p&gt;
+
+&lt;p&gt;So overall I am very hopeful for Enterprise 2.0. Not because we have already fulfilled its promise, but because we have managed to cross the difficult passage of the early hype and experimentation and can now finally focus on applying the learnt best practices.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 17 Feb 2014 12:05:31 +0100</pubDate>
+        <link>https://www.florianheinemann.com/enterprise/social/2014/02/17/8-Years-Of-Enterprise-20.html</link>
+        <guid isPermaLink="true">https://www.florianheinemann.com/enterprise/social/2014/02/17/8-Years-Of-Enterprise-20.html</guid>
+        
+        
+        <category>enterprise</category>
+        
+        <category>social</category>
         
       </item>
     
